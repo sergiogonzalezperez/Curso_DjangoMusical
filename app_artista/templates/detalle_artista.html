@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block titulo %}{{ artista.nombre }} | Melodías{% endblock %}
+
+{% block contenido %}
+<article class="artist-detail">
+    <div class="artist-banner">
+        {% if artista.foto_artista %}
+            <img src="{{ artista.foto_artista.url }}" alt="Foto de {{ artista.nombre }}" class="detail-photo">
+        {% else %}
+            <div class="detail-placeholder">👤</div>
+        {% endif %}
+        <div class="artist-info">
+            <h1>{{ artista.nombre }}</h1>
+            <h3>{{ artista.nacionalidad }}</h3>
+        </div>
+    </div>
+
+    <div class="detail-actions">
+        <a href="{% url 'app_artista:editar_artista' artista.id %}" class="btn btn-secondary">✏️ Editar</a>
+        <a href="{% url 'app_artista:borrar_artista' artista.id %}" class="btn btn-danger">🗑️ Borrar</a>
+    </div>
+
+    <section class="songs-section">
+        <h2>Canciones</h2>
+        {% if artista.canciones.all %}
+        <ul class="song-list">
+            {% for cancion in artista.canciones.all %}
+            <li>{{ cancion.titulo }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="empty-message">Este artista no tiene canciones registradas.</p>
+        {% endif %}
+    </section>
+</article>
+{% endblock %}

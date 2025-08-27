@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block titulo %}Artistas | Melodías{% endblock %}
+
+{% block contenido %}
+<div class="page-header">
+    <h2>Artistas Registrados</h2>
+    <a href="{% url 'app_artista:crear_artista' %}" class="btn btn-primary">+ Agregar Artista</a>
+</div>
+
+<ul class="artist-grid">
+    {% for artista in artistas %}
+    <li class="artist-card">
+        <a href="{% url 'app_artista:detalle_artista' artista.id %}">
+            {% if artista.foto_artista %}
+                <img src="{{ artista.foto_artista.url }}" alt="Foto de {{ artista.nombre }}" class="artist-img">
+            {% else %}
+                <div class="artist-placeholder">🎵</div>
+            {% endif %}
+            <h3>{{ artista.nombre }}</h3>
+            <p class="artist-nationality">{{ artista.nacionalidad }}</p>
+        </a>
+    </li>
+    {% empty %}
+    <li class="no-artists">No hay artistas registrados.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
